@@ -1,18 +1,9 @@
 mod modules;
+use modules::bank::Bank;
 use modules::input;
 
 fn main() {
     real_logic();
-}
-// A placeholder for the overall system state
-struct Bank {
-    // Later, you might put a Vec or HashMap of Accounts here!
-}
-
-impl Bank {
-    fn new() -> Self {
-        Bank {} // Initialize an empty bank
-    }
 }
 
 fn real_logic() {
