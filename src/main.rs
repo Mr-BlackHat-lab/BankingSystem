@@ -1,6 +1,8 @@
 mod modules;
 use modules::bank::Bank;
 use modules::input;
+use modules::manager;
+use modules::user;
 
 fn main() {
     real_logic();
@@ -9,26 +11,22 @@ fn main() {
 fn real_logic() {
     println!("Welcome to NewBank:\n\n");
 
-    // 1. Create your central bank state here
     let mut my_bank = Bank::new();
-
+    println!("who are you? ");
     loop {
-        println!("who are you? ");
         println!("1. User \n2. Manager\n3. Exit");
         let inpu = input::input_num();
 
         match inpu {
             1 => {
                 println!("user");
-                // 2. Pass a mutable reference so the user can modify things (like depositing money)
-                user(&mut my_bank);
-                break;
+                user::user(&mut my_bank);
+                continue;
             }
             2 => {
                 println!("manager");
-                // Manager also gets access to the bank state
-                manager(&mut my_bank);
-                break;
+                manager::manager(&mut my_bank);
+                continue;
             }
             3 => {
                 break;
@@ -38,13 +36,4 @@ fn real_logic() {
             }
         }
     }
-}
-
-// 3. Update signatures to accept the Bank state
-fn manager(bank: &mut Bank) {
-    // Manager logic here
-}
-
-fn user(bank: &mut Bank) {
-    // User logic here
 }
