@@ -59,7 +59,7 @@ fn user_menu(account: &mut Account) {
                 account.deposit(amount);
             }
             3 => {
-                println!("Your current balance is: ₹{}", account.get_balance());
+                println!("Your current balance is: ${}", account.get_balance());
             }
             4 => {
                 println!("Logging out...");
