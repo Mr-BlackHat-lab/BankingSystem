@@ -48,6 +48,17 @@ impl Bank {
         self.accounts.insert(id, new_account);
         id
     }
+    pub fn print_all_accounts(&self) {
+        if self.accounts.is_empty() {
+            println!("No accounts exits in the bank yet");
+            return;
+        }
+        println!("--- Bank Ledger ---");
+        for (id, account) in &self.accounts {
+            println!("Account ID:{} | Balance ${}", id, account.get_balance());
+        }
+        println!("-------------------");
+    }
     pub fn get_account_mut(&mut self, id: u32) -> Option<&mut Account> {
         self.accounts.get_mut(&id)
     }
