@@ -1,4 +1,4 @@
-use crate::modules::bank::Bank;
+use crate::modules::bank::{Account, Bank};
 use crate::modules::input::input_num;
 pub fn user(bank: &mut Bank) {
     println!("--- User Portal ---");
@@ -22,48 +22,46 @@ pub fn user(bank: &mut Bank) {
                 println!("Invalid choice. Please enter 1, 2, or 3.");
             }
         }
-        // println!("Enter your Account ID:");
-        // let user_id = 101;
-        // match bank.get_account_mut(user_id) {
-        //     Some(account) => {
-        //         println!("Welcome back! Accessing account {}.", account.id);
-        //         account.deposit(50.0);
-        //     }
-        //     None => {
-        //         println!("Error: Account ID {} not found in the system.", user_id);
-        //     }
-        // }
     }
 }
 fn user_login(bank: &mut Bank) {
     println!("Enter your Account ID:");
     let user_id = input_num();
+
     match bank.get_account_mut(user_id) {
         Some(account) => {
             println!("Welcome back! Accessing account {}.", account.id);
-            user_menu(bank, user_id);
+            // Pass the specific account reference, NOT the whole bank!
+            user_menu(account);
         }
         None => {
             println!("Error: Account ID {} not found in the system.", user_id);
         }
     }
 }
-fn user_menu(bank: &mut Bank, user_id: u32) {
-    println!("what task you want to prferom?");
+
+fn user_menu(account: &mut Account) {
     loop {
-        println!("1. Withdrawl \n2. Deposite\n3. View Balance\n4. Exit");
+        println!("\nWhat task do you want to perform?");
+        println!("1. Withdraw \n2. Deposit\n3. View Balance\n4. Exit");
         let opt = input_num();
+
         match opt {
             1 => {
-                continue;
+                println!("Enter amount to withdraw:");
+                let amount = input_num() as f64;
+                account.withdraw(amount);
             }
             2 => {
-                continue;
+                println!("Enter amount to deposit:");
+                let amount = input_num() as f64;
+                account.deposit(amount);
             }
             3 => {
-                continue;
+                println!("Your current balance is: ₹{}", account.get_balance());
             }
             4 => {
+                println!("Logging out...");
                 break;
             }
             _ => {

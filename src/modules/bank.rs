@@ -15,12 +15,19 @@ impl Account {
         self.balance += amount;
         println!("Deposited {}, new Balance:{}\n", amount, self.balance);
     }
-    pub fn withdrawl(&mut self, amount: f64) {
-        self.balance -= amount;
-        println!("Withdrawled {}, new Balance:{}\n", amount, self.balance);
+    pub fn withdraw(&mut self, amount: f64) {
+        if amount > self.balance {
+            println!("Insufficient funds! You only have ${}.", self.balance);
+        } else {
+            self.balance -= amount;
+            println!(
+                "Successfully withdrew ${}. New balance: ${}",
+                amount, self.balance
+            );
+        }
     }
-    pub fn current_balance(self) {
-        println!("Current Balance:{}\n", self.balance);
+    pub fn get_balance(&self) -> f64 {
+        self.balance
     }
 }
 pub struct Bank {
