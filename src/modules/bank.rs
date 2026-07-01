@@ -32,16 +32,21 @@ impl Account {
 }
 pub struct Bank {
     accounts: HashMap<u32, Account>,
+    next_id: u32,
 }
 impl Bank {
     pub fn new() -> Self {
         Bank {
             accounts: HashMap::new(),
+            next_id: 1001,
         }
     }
-    pub fn create_account(&mut self, id: u32, initial_balance: f64) {
+    pub fn create_account(&mut self, initial_balance: f64) -> u32 {
+        let id = self.next_id;
+        self.next_id += 1;
         let new_account = Account::new(id, initial_balance);
         self.accounts.insert(id, new_account);
+        id
     }
     pub fn get_account_mut(&mut self, id: u32) -> Option<&mut Account> {
         self.accounts.get_mut(&id)

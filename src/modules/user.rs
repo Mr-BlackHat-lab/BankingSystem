@@ -12,10 +12,11 @@ pub fn user(bank: &mut Bank) {
                 continue;
             }
             2 => {
-                //create fn
+                user_create_account(bank);
                 continue;
             }
             3 => {
+                println!("Going Back to main menu");
                 break;
             }
             _ => {
@@ -69,4 +70,13 @@ fn user_menu(account: &mut Account) {
             }
         }
     }
+}
+
+fn user_create_account(bank: &mut Bank) {
+    println!("Let's open a new account");
+    println!("Enter your initial deposit");
+    let money = input_num() as f64;
+    let gernated_id = bank.create_account(money);
+    println!("Success! Your new Account ID is: {}", gernated_id);
+    println!("Please write this down to log in later.");
 }
