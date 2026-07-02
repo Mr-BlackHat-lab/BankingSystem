@@ -1,14 +1,41 @@
 use std::collections::HashMap;
+use std::string;
+
+enum AccountType {
+    Current,
+    Saving,
+}
 
 pub struct Account {
+    pub primary_owner: String,
     pub id: u32,
     balance: f64,
+    pub accounttype: AccountType,
+    pub secondary_owner: Option<Vec<String>>,
 }
 impl Account {
-    pub fn new(id: u32, initial_balance: f64) -> Self {
+    pub fn new(
+        owner: String,
+        id: u32,
+        initial_balance: f64,
+        accouttype: AccountType,
+        shared: bool,
+    ) -> Self {
+        let owner_list = if shared { Some(Vec::new()) } else { None };
         Account {
+            primary_owner: owner,
             id,
             balance: initial_balance,
+            accounttype: accouttype,
+            secondary_owner: owner_list,
+        }
+    }
+    pub fn add_secondary_owner(&mut self, new_owner: String) {
+        if let Some(ref mut list) = self.secondary_owner {
+            list.push(new_owner.clone());
+            println!("{} was added to the shared account.", new_owner)
+        } else {
+            println!("Error: This is a single-user account. You cannot add secondary owners.");
         }
     }
     pub fn deposit(&mut self, amount: f64) {
@@ -41,10 +68,16 @@ impl Bank {
             next_id: 1001,
         }
     }
-    pub fn create_account(&mut self, initial_balance: f64) -> u32 {
+    pub fn create_account(
+        &mut self,
+        owner: String,
+        initial_balance: f64,
+        accouttype: AccountType,
+        shared: bool,
+    ) -> u32 {
         let id = self.next_id;
         self.next_id += 1;
-        let new_account = Account::new(id, initial_balance);
+        let new_account = Account::new(owner, id, initial_balance, accouttype, shared);
         self.accounts.insert(id, new_account);
         id
     }
