@@ -1,6 +1,21 @@
 use crate::modules::bank::AccountType;
 use std::io;
 
+pub fn input_bool() -> bool {
+    loop {
+        println!("1. Yes");
+        println!("2. No");
+
+        let mut input = String::new();
+        io::stdin().read_line(&mut input).unwrap();
+
+        match input.trim() {
+            "1" => return true,
+            "2" => return false,
+            _ => println!("Invalid choice."),
+        }
+    }
+}
 pub fn input_account_type() -> AccountType {
     loop {
         println!("1. Current");

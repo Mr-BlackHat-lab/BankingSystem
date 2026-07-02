@@ -1,5 +1,5 @@
 use crate::modules::account_menu::{account_menu, create_account};
-use crate::modules::bank::{Account, Bank};
+use crate::modules::bank::Bank;
 use crate::modules::input::input_num;
 pub fn user(bank: &mut Bank) {
     println!("--- User Portal ---");

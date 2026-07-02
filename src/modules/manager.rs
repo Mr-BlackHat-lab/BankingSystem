@@ -1,5 +1,5 @@
 use crate::modules::account_menu::{account_menu, create_account};
-use crate::modules::bank::{Account, Bank};
+use crate::modules::bank::Bank;
 use crate::modules::input::input_num;
 pub fn manager(bank: &mut Bank) {
     println!("--- Manager Portal ---");
@@ -18,7 +18,7 @@ pub fn manager(bank: &mut Bank) {
                 continue;
             }
             3 => {
-                manager_modify_balance(bank);
+                manager_modify(bank);
                 continue;
             }
             4 => {
@@ -32,7 +32,7 @@ pub fn manager(bank: &mut Bank) {
     }
 }
 
-fn manager_modify_balance(bank: &mut Bank) {
+fn manager_modify(bank: &mut Bank) {
     println!("Enter the Account ID you want to modify:");
     let user_id = input_num();
     match bank.get_account_mut(user_id) {

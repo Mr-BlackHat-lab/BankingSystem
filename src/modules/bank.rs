@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+#[derive(Debug)]
 pub enum AccountType {
     Current,
     Saving,
@@ -87,7 +88,14 @@ impl Bank {
         }
         println!("--- Bank Ledger ---");
         for (id, account) in &self.accounts {
-            println!("Account ID:{} | Balance ${}", id, account.get_balance());
+            println!(
+                "Account ID:{} | Owner {} | Balance ${} | AccountType {:?} | Secondary Owenr{:?} ",
+                id,
+                account.primary_owner,
+                account.get_balance(),
+                account.accounttype,
+                account.secondary_owner
+            );
         }
         println!("-------------------");
     }

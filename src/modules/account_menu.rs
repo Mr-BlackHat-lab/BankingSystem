@@ -1,15 +1,32 @@
 use crate::modules::bank::{Account, Bank};
-use crate::modules::input::{input_account_type, input_num, input_str};
+use crate::modules::input::{input_account_type, input_bool, input_num, input_str};
 
 pub fn create_account(bank: &mut Bank) {
     println!("Let's open a new account");
     println!("Account Owner Name:");
     let name = input_str();
     println!("Enter Account type:");
-    let accounttype = input_account_type();
+    let account_type = input_account_type();
     println!("Enter your initial deposit");
     let money = input_num() as f64;
-    let gernated_id = bank.create_account(name, money, accounttype);
+    println!("Is Account is shared:");
+    let is_shared = input_bool();
+    let gernated_id = bank.create_account(name, money, account_type, is_shared);
+    if is_shared {
+        println!("Do you want to add secondary user");
+        let yn = input_bool();
+        if yn {
+            match bank.get_account_mut(gernated_id) {
+                Some(account) => {
+                    let new_owner = input_str();
+                    account.add_secondary_owner(new_owner);
+                }
+                None => {
+                    println!("Error: Account ID {} not found in the system.", gernated_id);
+                }
+            }
+        }
+    }
     println!("Success! Your new Account ID is: {}", gernated_id);
     println!("Please write this down to log in later.");
 }
