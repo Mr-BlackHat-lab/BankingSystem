@@ -1,3 +1,4 @@
+pub mod account_menu;
 pub mod bank;
 pub mod input;
 pub mod manager;

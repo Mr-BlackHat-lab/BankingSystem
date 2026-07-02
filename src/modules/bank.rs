@@ -1,7 +1,6 @@
 use std::collections::HashMap;
-use std::string;
 
-enum AccountType {
+pub enum AccountType {
     Current,
     Saving,
 }
