@@ -64,6 +64,16 @@ impl Account {
             );
         }
     }
+    pub fn account_detail(&self) {
+        println!(
+            "Account ID:{} | Owner {} | Balance ${} | AccountType {:?} | Secondary Owenr{:?} ",
+            self.id,
+            self.primary_owner,
+            self.get_balance(),
+            self.accounttype,
+            self.secondary_owner
+        );
+    }
     pub fn get_balance(&self) -> f64 {
         self.balance
     }
@@ -100,7 +110,7 @@ impl Bank {
         println!("--- Bank Ledger ---");
         for (id, account) in &self.accounts {
             println!(
-                "Account ID:{} | Owner {} | Balance ${} | AccountType {:?} | Secondary Owenr{:?} ",
+                "Account ID:{} | Owner: {} | Balance: ${} | AccountType: {:?} | Secondary Owenr{:?} ",
                 id,
                 account.primary_owner,
                 account.get_balance(),

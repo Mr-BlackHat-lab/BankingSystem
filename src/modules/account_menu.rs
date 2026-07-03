@@ -33,7 +33,7 @@ pub fn create_account(bank: &mut Bank) {
 pub fn account_menu(account: &mut Account) {
     loop {
         println!("\nWhat task do you want to perform?");
-        println!("1. Withdraw \n2. Deposit\n3. View Balance\n4. Add second user\n0. Exit");
+        println!("1. Withdraw \n2. Deposit\n3. View Balance\n4. Add second user\n5. Account Details\n0. Exit");
         let opt = input_num();
 
         match opt {
@@ -55,12 +55,15 @@ pub fn account_menu(account: &mut Account) {
                 let name = input_str();
                 account.add_secondary_owner(name);
             }
+            5 => {
+                account.account_detail();
+            }
             0 => {
                 println!("Logging out...");
                 break;
             }
             _ => {
-                println!("Invalid choice. Please enter 0, 1, 2, 3, or 4.");
+                println!("Invalid choice. Please enter 0, 1, 2, 3, 4 or 5.");
             }
         }
     }
