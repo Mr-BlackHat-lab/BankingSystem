@@ -14,7 +14,7 @@ fn real_logic() {
     let mut my_bank = Bank::new();
     println!("who are you? ");
     loop {
-        println!("1. User \n2. Manager\n3. Exit");
+        println!("1. User \n2. Manager\n0. Exit");
         let inpu = input::input_num();
 
         match inpu {
@@ -28,11 +28,11 @@ fn real_logic() {
                 manager::manager(&mut my_bank);
                 continue;
             }
-            3 => {
+            0 => {
                 break;
             }
             _ => {
-                println!("Invalid choice. Please enter 1, 2, or 3.");
+                println!("Invalid choice. Please enter 1, 2, or 0.");
             }
         }
     }

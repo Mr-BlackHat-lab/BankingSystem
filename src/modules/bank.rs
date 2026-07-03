@@ -38,6 +38,17 @@ impl Account {
             println!("Error: This is a single-user account. You cannot add secondary owners.");
         }
     }
+    pub fn convert_to_shared(&mut self) {
+        match self.secondary_owner {
+            Some(_) => {
+                println!("This account is already shared");
+            }
+            None => {
+                self.secondary_owner = Some(Vec::new());
+                println!("Success! Account is coverted to a shared account");
+            }
+        }
+    }
     pub fn deposit(&mut self, amount: f64) {
         self.balance += amount;
         println!("Deposited {}, new Balance:{}\n", amount, self.balance);

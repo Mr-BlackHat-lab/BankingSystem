@@ -4,7 +4,7 @@ use crate::modules::input::input_num;
 pub fn user(bank: &mut Bank) {
     println!("--- User Portal ---");
     loop {
-        println!("1. Login \n2. Create Account\n3. Exit");
+        println!("1. Login \n2. Create Account\n0. Exit");
         let inpu = input_num();
 
         match inpu {
@@ -16,12 +16,12 @@ pub fn user(bank: &mut Bank) {
                 create_account(bank);
                 continue;
             }
-            3 => {
+            0 => {
                 println!("Going Back to main menu");
                 break;
             }
             _ => {
-                println!("Invalid choice. Please enter 1, 2, or 3.");
+                println!("Invalid choice. Please enter 0, 1 or 2.");
             }
         }
     }
