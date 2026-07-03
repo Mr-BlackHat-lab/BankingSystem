@@ -21,7 +21,11 @@ The application runs entirely in the terminal and stores all data in memory.
   - Deposit
   - Withdraw (with insufficient funds check)
   - View balance
+  - View full account details
 - Manager ledger view for all existing accounts
+- Manager ownership controls:
+  - Convert single-owner accounts to shared
+  - Add secondary owners after creation
 
 ## Tech Stack
 
@@ -157,10 +161,11 @@ This section explains the complete runtime flow and how each module collaborates
 
 Planned improvements in order:
 
-1. Manager-specific account ownership controls
+1. Binary serialization with a custom file type
 
-- Allow managers to convert an account from single-owner to shared.
-- Allow managers to add secondary owners after account creation.
+- Translate Rust structs directly into raw machine bytes instead of text.
+- Store account data in a custom binary file that is fast to read and write.
+- If the file is opened in a text editor like Notepad, it will look like unreadable garbled characters.
 
 2. Persistent data storage
 
@@ -174,7 +179,6 @@ Planned improvements in order:
 
 - Data is not persisted; all accounts are lost when the app exits
 - Money input currently uses positive whole numbers only
-- Shared accounts currently allow adding one secondary owner during account creation flow
 - No authentication beyond account ID lookup
 
 ## License
@@ -190,6 +194,6 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 - [x] Part 5: Core account operations (withdraw, deposit, view balance)
 - [x] Part 6: Manager features (view all accounts, create, modify)
 - [x] Part 7: Internal architecture and runtime flow documented in README
-- [ ] Part 8: Manager conversion from single-owner to shared after creation
-- [ ] Part 9: Persistent storage (data saved after app exits)
+- [x] Part 8: Manager conversion from single-owner to shared after creation
+- [ ] Part 9: Binary serialization using a custom file type
 - [ ] Part 10: Statement history for each account
