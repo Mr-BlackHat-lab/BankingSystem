@@ -1,11 +1,15 @@
+use bincode::config::standard;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::fs;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub enum AccountType {
     Current,
     Saving,
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct Account {
     pub primary_owner: String,
     pub id: u32,
@@ -78,11 +82,38 @@ impl Account {
         self.balance
     }
 }
+#[derive(Serialize, Deserialize)]
 pub struct Bank {
     accounts: HashMap<u32, Account>,
     next_id: u32,
 }
 impl Bank {
+    pub fn save_to_file(&self) {
+        let encoded =
+            bincode::serde::encode_to_vec(self, standard()).expect("Failed to serialize bank");
+
+        fs::write("database.bank", encoded).expect("Failed to write data to file");
+
+        println!("Bank data securely saved to database.bank");
+    }
+    pub fn load_from_file() -> Self {
+        match fs::read("database.bank") {
+            Ok(bytes) => match bincode::serde::decode_from_slice::<Bank, _>(&bytes, standard()) {
+                Ok((bank, _)) => {
+                    println!("Successfully loaded existing data.");
+                    bank
+                }
+                Err(e) => {
+                    println!("Failed to decode database: {}", e);
+                    Bank::new()
+                }
+            },
+            Err(_) => {
+                println!("No existing save found. Starting a fresh bank.");
+                Bank::new()
+            }
+        }
+    }
     pub fn new() -> Self {
         Bank {
             accounts: HashMap::new(),

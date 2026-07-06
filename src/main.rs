@@ -11,7 +11,7 @@ fn main() {
 fn real_logic() {
     println!("Welcome to NewBank:\n\n");
 
-    let mut my_bank = Bank::new();
+    let mut my_bank = Bank::load_from_file();
     println!("who are you? ");
     loop {
         println!("1. User \n2. Manager\n0. Exit");
@@ -29,6 +29,9 @@ fn real_logic() {
                 continue;
             }
             0 => {
+                println!("Saving data...");
+                my_bank.save_to_file(); // Save right before exiting!
+                println!("Going Back to main menu");
                 break;
             }
             _ => {
