@@ -179,3 +179,6 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 - [x] Part 8: Manager conversion from single-owner to shared after creation
 - [x] Part 9: Binary serialization using a custom file type
 - [ ] Part 10: Statement history for each account
+- [ ] Part 11: Stronger authentication and role checks
+- [ ] Part 12: More detailed reporting and auditing
+- [ ] Part 13: Shifting to GUI for better user experience

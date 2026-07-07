@@ -18,6 +18,7 @@ pub fn create_account(bank: &mut Bank) {
         if yn {
             match bank.get_account_mut(gernated_id) {
                 Some(account) => {
+                    println!("Enter the name of second user: ");
                     let new_owner = input_str();
                     account.add_secondary_owner(new_owner);
                 }
@@ -33,7 +34,7 @@ pub fn create_account(bank: &mut Bank) {
 pub fn account_menu(account: &mut Account) {
     loop {
         println!("\nWhat task do you want to perform?");
-        println!("1. Withdraw \n2. Deposit\n3. View Balance\n4. Add second user\n5. Account Details\n0. Exit");
+        println!("1. Withdraw \n2. Deposit\n3. View Balance\n4. Add second user\n5. Account Details\n6. Print Statements\n0. Exit");
         let opt = input_num();
 
         match opt {
@@ -57,6 +58,9 @@ pub fn account_menu(account: &mut Account) {
             }
             5 => {
                 account.account_detail();
+            }
+            6 => {
+                account.print_statement();
             }
             0 => {
                 println!("Logging out...");

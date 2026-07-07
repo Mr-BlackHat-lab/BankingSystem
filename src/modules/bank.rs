@@ -4,11 +4,21 @@ use std::collections::HashMap;
 use std::fs;
 
 #[derive(Debug, Serialize, Deserialize)]
+pub enum TransactionType {
+    Deposit,
+    Withdrawal,
+}
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Transaction {
+    transaction_type: TransactionType,
+    amount: f64,
+    remaining_amount: f64,
+}
+#[derive(Debug, Serialize, Deserialize)]
 pub enum AccountType {
     Current,
     Saving,
 }
-
 #[derive(Serialize, Deserialize)]
 pub struct Account {
     pub primary_owner: String,
@@ -16,6 +26,16 @@ pub struct Account {
     balance: f64,
     pub accounttype: AccountType,
     pub secondary_owner: Option<Vec<String>>,
+    history: Vec<Transaction>,
+}
+impl Transaction {
+    pub fn new(transaction_type: TransactionType, amount: f64, remaining_amount: f64) -> Self {
+        Transaction {
+            transaction_type,
+            amount,
+            remaining_amount,
+        }
+    }
 }
 impl Account {
     pub fn new(
@@ -32,6 +52,7 @@ impl Account {
             balance: initial_balance,
             accounttype: accouttype,
             secondary_owner: owner_list,
+            history: Vec::new(),
         }
     }
     pub fn add_secondary_owner(&mut self, new_owner: String) {
@@ -56,6 +77,8 @@ impl Account {
     pub fn deposit(&mut self, amount: f64) {
         self.balance += amount;
         println!("Deposited {}, new Balance:{}\n", amount, self.balance);
+        let record = Transaction::new(TransactionType::Deposit, amount, self.balance);
+        self.history.push(record);
     }
     pub fn withdraw(&mut self, amount: f64) {
         if amount > self.balance {
@@ -66,6 +89,8 @@ impl Account {
                 "Successfully withdrew ${}. New balance: ${}",
                 amount, self.balance
             );
+            let record = Transaction::new(TransactionType::Withdrawal, amount, self.balance);
+            self.history.push(record);
         }
     }
     pub fn account_detail(&self) {
@@ -80,6 +105,23 @@ impl Account {
     }
     pub fn get_balance(&self) -> f64 {
         self.balance
+    }
+    pub fn print_statement(&self) {
+        println!("\n--- Bank Statement for Account {} ---", self.id);
+        if self.history.is_empty() {
+            println!("No transactions yet.");
+        } else {
+            for (index, transaction) in self.history.iter().enumerate() {
+                println!(
+                    "{}. {:?} | Amount: ${} | Remaining Amount: ${}",
+                    index + 1,
+                    transaction.transaction_type,
+                    transaction.amount,
+                    transaction.remaining_amount
+                );
+            }
+        }
+        println!("-------------------------------------\n");
     }
 }
 #[derive(Serialize, Deserialize)]
